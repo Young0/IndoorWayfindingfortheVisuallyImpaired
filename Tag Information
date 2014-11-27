@@ -1,0 +1,82 @@
+package edu.ece671.mapexample;
+//longitude and latitude of all the tags in Marcus
+
+public class calculatedTagXY {
+	position[] allTag= new position[17];
+	double lat1 =42.39354668258381;
+	double lon1 =-72.52833187580109;
+	double lat2 =42.39359447166392;
+	double lon2 =-72.52839054912329;
+	double lat3 =42.393661574404135;
+	double lon3 =-72.52840027213097;
+	double lat4 =42.39370936339676;
+	double lon4 =-72.52845861017704;
+	double lat5 =42.39377498034809;
+	double lon5 =-72.52846665680408;
+	double lat6 =42.39382895952455;
+	double lon6 =-72.52852533012629;
+	double lat7 =42.39389135741379;
+	double lon7 =-72.52853605896235;
+	double lat8 =42.393932460751394;
+	double lon8 =-72.52859741449356;
+	double lat9 =42.393999315520105;
+	double lon9 =-72.52860512584448;
+	double lat10 =42.39404537098601;
+	double lon10 =-72.52866346389055;
+	double lat11 =42.394103806904866;
+	double lon11 =-72.52867016941309;
+	double lat12 =42.39417412802318;
+	double lon12 =-72.52873621881008;
+	double lat13 =42.39423256382214;
+	double lon13 =-72.52873655408621;
+	double lat14 =42.39422736402869;
+	double lon14 =72.52877611666918;
+	double lat15 =42.39416001428392;
+	double lon15 =-72.52882674336433;
+	double lat16 =42.39402060998703;
+	double lon16 =-72.52868391573429;
+	double lat17 =42.39397727821532;
+	double lon17 =-72.52871174365282;
+	double lat1Degree = 111000.0;
+	double lon1Degree = Math.cos((lat1/360.0)*2.0*Math.PI)*111000.0;
+	position dis1 = new position(0,0);
+	position dis2 = new position(-1*(lon1-lon2)*lon1Degree,(lat2-lat1)*lat1Degree);	
+	position dis3 = new position(-1*(lon1-lon3)*lon1Degree,(lat3-lat1)*lat1Degree);
+	position dis4 = new position(-1*(lon1-lon4)*lon1Degree,(lat4-lat1)*lat1Degree);
+	position dis5 = new position(-1*(lon1-lon5)*lon1Degree,(lat5-lat1)*lat1Degree);
+	position dis6 = new position(-1*(lon1-lon6)*lon1Degree,(lat6-lat1)*lat1Degree);
+	position dis7 = new position(-1*(lon1-lon7)*lon1Degree,(lat7-lat1)*lat1Degree);
+	position dis8 = new position(-1*(lon1-lon8)*lon1Degree,(lat8-lat1)*lat1Degree);
+	position dis9 = new position(-1*(lon1-lon9)*lon1Degree,(lat9-lat1)*lat1Degree);
+	position dis10 = new position(-1*(lon1-lon10)*lon1Degree,(lat10-lat1)*lat1Degree);
+	position dis11 = new position(-1*(lon1-lon11)*lon1Degree,(lat11-lat1)*lat1Degree);
+	position dis12 = new position(-1*(lon1-lon12)*lon1Degree,(lat12-lat1)*lat1Degree);
+	position dis13 = new position(-1*(lon1-lon13)*lon1Degree,(lat13-lat1)*lat1Degree);
+	position dis14 = new position(-1*(lon1-lon14)*lon1Degree,(lat14-lat1)*lat1Degree);
+	position dis15 = new position(-1*(lon1-lon15)*lon1Degree,(lat15-lat1)*lat1Degree);
+	position dis16 = new position(-1*(lon1-lon16)*lon1Degree,(lat16-lat1)*lat1Degree);
+	position dis17 = new position(-1*(lon1-lon17)*lon1Degree,(lat17-lat1)*lat1Degree);
+	
+	public position[] calculatedTagXY(){
+		allTag[0] = dis1;
+		allTag[1] = dis2;
+		allTag[2] = dis3;
+		allTag[3] = dis4;
+		allTag[4] = dis5;
+		allTag[5] = dis6;
+		allTag[6] = dis7;
+		allTag[7] = dis8;
+		allTag[8] = dis9;
+		allTag[9] = dis10;
+		allTag[10] = dis11;
+		allTag[11] = dis12;
+		allTag[12] = dis13;
+		allTag[13] = dis14;
+		allTag[14] = dis15;
+		allTag[15] = dis16;
+		allTag[16] = dis17;
+		return allTag;
+	}
+
+}
+
