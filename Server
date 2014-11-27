@@ -1,5 +1,6 @@
 package edu.ece671.mapexample;
 
+
 import java.util.ArrayList;
 
 import android.app.Service;
@@ -19,6 +20,7 @@ public class CalculationService extends Service{
 	int startArea;
 	int desArea;
 	int desSpot;
+	float degree;
 	double desSpotLat;
 	double desSpotLon;
 	double[][] nodes = new double[17][2];
@@ -103,6 +105,7 @@ public class CalculationService extends Service{
 			}
 		}
 		desSpot = myBundle.getInt("100");
+		degree = myBundle.getFloat("1000");
 		Log.d("3333333333", desSpot+"");
 		findLoc(data);
 		/*
@@ -220,7 +223,6 @@ public class CalculationService extends Service{
 			lon=((-1)*a[16]*spotDownLon+(-1)*a[9]*spotUpLon)/((-1*(a[16]+a[9])));
 			lon=((-1)*lon*a[spot]+(-1)*spotLon*latAvg)/((-1)*(a[spot]+latAvg));
 		}
-
 		Log.d("101010101010", desSpot+"");
 		if(desSpot!=-1){
 			Log.d("777777", desSpot+"");
@@ -270,7 +272,7 @@ public class CalculationService extends Service{
 
 			Log.d("8888888", desArea+" "+startArea);
 			if(startArea == 1){
-				if(desArea == 1){
+				if(desArea == 1){					
 					if(desSpot==7){
 						straightDis = Distance(lon,lat, (nodes[7][1]+nodes[8][1])/2, (nodes[7][0]+nodes[8][0])/2);
 					}else{
@@ -284,24 +286,42 @@ public class CalculationService extends Service{
 					}else if(straightDis <= 2){
 						direction = "you arrived";
 					}else if(spot > desSpot){
-						direction = "go straight "+ ((double)(int)(straightDis*10))/10 + "meters southeastwardly";
+						getDirection(157);
+						if(direction.equals("go")){
+							direction = "go straight "+ ((double)(int)(straightDis*10))/10 + "meters";
+						}
 					}else if(spot < desSpot){
-						direction = "go straight "+ ((double)(int)(straightDis*10))/10 + "meters northwestwardly";
+						getDirection(337);
+						if(direction.equals("go")){
+							direction = "go straight "+ ((double)(int)(straightDis*10))/10 + "meters";
+						}
 					}else{
 						direction = "keep going 1 meter.";
 					}
 				}else if(desArea == 2){
 					straightDis = Distance(lon,lat, nodes[desSpot][1], nodes[desSpot][0]);
-					direction = "go straight " + ((double)(int)(straightDis*10))/10 + "meters northwestwardly" ;
+					getDirection(337);
+					if(direction.equals("go")){
+						direction = "go straight " + ((double)(int)(straightDis*10))/10 + "meters";
+					}
 				}else if(desArea == 3){
-					straightDis = Distance(lon, lat, corner14lon, corner14lat);  
-					direction = "go straight "+ ((double)(int)(straightDis*10))/10 + "meters northwestwardly, then turn left";
+					straightDis = Distance(lon, lat, corner14lon, corner14lat);
+					getDirection(337);
+					if(direction.equals("go")){
+						direction = "go straight "+ ((double)(int)(straightDis*10))/10 + "meters, then turn left";
+					}
 				}else if(desArea == 4){
 					straightDis = Distance(lon, lat, corner14lon, corner14lat); 
 					if(straightDis <= 1){  
-						direction = "go straight southwestwardly";
+						getDirection(230);
+						if(direction.equals("go")){
+							direction = "go straight";
+						}
 					}else{
-						direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters northwestwardly, then turn left.";
+						getDirection(337);
+						if(direction.equals("go")){
+							direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters, then turn left.";
+						}
 					}
 				}
 			}
@@ -309,34 +329,55 @@ public class CalculationService extends Service{
 			if(startArea == 2){
 				if(desArea == 1){
 					straightDis = Distance( lon, lat, nodes[desSpot][1], nodes[desSpot][0]);
-					direction = "go straight "+((double)(int)(straightDis*10))/10+"meters southeastwardly" ;
+					getDirection(157);
+					if(direction.equals("go")){
+						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters" ;
+					}
 				}else if(desArea == 2){
 					straightDis = Distance( lon, lat, nodes[desSpot][1], nodes[desSpot][0]);
 					if(desSpot == spot && desSpot!=7){
 						straightDis = getDistance(a[spot]);
 					}
-					if(straightDis <= 2){
+					if(straightDis <= 1){
 						direction = "you arrived";
 					}else if(spot > desSpot){
-						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters southeastwardly";
+						getDirection(157);
+						if(direction.equals("go")){
+							direction = "go straight "+((double)(int)(straightDis*10))/10+"meters";
+						}
 					}else if(spot < desSpot){
-						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters northwestwardly";
+						getDirection(337);
+						if(direction.equals("go")){
+							direction = "go straight "+((double)(int)(straightDis*10))/10+"meters";
+						}
 					}else{
 						direction = "keep going 1 meter.";
 					}
 				}else if(desArea == 3){
 					straightDis = Distance(lon, lat, corner23lon, corner23lat); 
 					if(straightDis <= 1){
-						direction = "turn left, then go straight southwestwardly";
+						getDirection(230);
+						if(direction.equals("go")){
+							direction = "turn left, then go straight ";
+						}
 					}else{
-						direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters northwestwardly, then turn left";
+						getDirection(337);
+						if(direction.equals("go")){
+							direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters , then turn left";
+						}
 					}
 				}else if(desArea == 4){
 					straightDis = Distance(lon, lat, corner14lon, corner14lat); 
 					if(straightDis <= 1){
-						direction = "go straight southwestwardly";
+						getDirection(230);
+						if(direction.equals("go")){
+							direction = "go straight";
+						}
 					}else{
-						direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters southeastwardly, then turn right";
+						getDirection(157);
+						if(direction.equals("go")){
+							direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters, then turn right";
+						}
 					}
 				}
 			}
@@ -344,51 +385,81 @@ public class CalculationService extends Service{
 			if(startArea == 3){  
 				if(desArea == 1){
 					straightDis = Distance(lon, lat, corner23lon, corner23lat);
-					direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters northeastwardly, then turn right";
+					getDirection(50);
+					if(direction.equals("go")){
+						direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters , then turn right";
+					}
 				}else if(desArea == 2){
 					straightDis = Distance(lon, lat, corner23lon, corner23lat);
-						direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters northeastwardly, then turn right";
+					getDirection(50);
+					if(direction.equals("go")){
+						direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters, then turn right";
+					}
 				}else if(desArea == 3){
 					straightDis = Distance(lon, lat, nodes[desSpot][1], nodes[desSpot][0]);
 					if(desSpot == spot && desSpot!=7){
 						straightDis = getDistance(a[spot]);
 					}
-					if(straightDis <= 2){
+					if(straightDis <= 1){
 						direction = "you arrived";
 					}if(spot > desSpot){
-						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters northeastwardly";
+						getDirection(50);
+						if(direction.equals("go")){
+							direction = "go straight "+((double)(int)(straightDis*10))/10+"meters";
+						}
 					}else if(spot < desSpot){
-						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters southwestwardly";
+						getDirection(230);
+						if(direction.equals("go")){
+							direction = "go straight "+((double)(int)(straightDis*10))/10+"meters ";
+						}
 					}else{
 						direction = "keep going 1 meter.";
 					}
 				}else if(desArea == 4){
 					straightDis = Distance(lon, lat, corner23lon, corner23lat);
-					direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters northeastwardly, then turn right";
+					getDirection(50);
+					if(direction.equals("go")){
+						direction = "go straight "+ ((double)(int)(straightDis*10))/10 +"meters, then turn right";
+					}
 				}
 			}
 			
 			if(startArea == 4){ 
 				if(desArea == 1){
 					straightDis = Distance(lon, lat, corner14lon, corner14lat);
-					direction = "go straight "+((double)(int)(straightDis*10))/10+ "meters northeastwardly, then turn right";
+					getDirection(50);
+					if(direction.equals("go")){
+						direction = "go straight "+((double)(int)(straightDis*10))/10+ "meters , then turn right";
+					}
 				}else if(desArea == 2){
 					straightDis = Distance(lon, lat, corner14lon, corner14lat);
-					direction = "go straight "+((double)(int)(straightDis*10))/10+"meters northeastwardly, then turn left";
+					getDirection(50);
+					if(direction.equals("go")){
+						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters , then turn left";
+					}
 				}else if(desArea == 3){
 					straightDis = Distance(lon, lat, corner14lon, corner14lat);
-					direction = "go straight "+((double)(int)(straightDis*10))/10+"meters northeastwardly, then turn left";
+					getDirection(50);
+					if(direction.equals("go")){
+						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters , then turn left";
+					}
 				}else if(desArea == 4){
 					if(desSpot == spot && desSpot!=7){
 						straightDis = getDistance(a[spot]);
 					}
 					straightDis = Distance( lon, lat, nodes[desSpot][1], nodes[desSpot][0]);
-					if(straightDis <= 2 ){
+					if(straightDis <=1 ){
 						direction = "you arrived";
 					}else if(spot > desSpot){
-						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters northeastwardly ";
+						getDirection(50);
+						if(direction.equals("go")){
+							direction = "go straight "+((double)(int)(straightDis*10))/10+"meters  ";
+						}
 					}else if(spot < desSpot){
-						direction = "go straight "+((double)(int)(straightDis*10))/10+"meters southwestwardly ";
+						getDirection(230);
+						if(direction.equals("go")){
+							direction = "go straight "+((double)(int)(straightDis*10))/10+"meters  ";
+						}
 					}else{
 						direction = "keep going 1 meter.";
 					}
@@ -399,7 +470,54 @@ public class CalculationService extends Service{
 		Thread thread = new Thread(null, calculationAnswer, "calculationAnswerThread");
 		thread.start();	
 	}
-
+	
+	public void getDirection(float curDegree) {
+		if (curDegree == 337) {
+			if(degree > 352 ) {
+				direction = "Wrong direction, please turn left " + (degree - 337) + "degree";
+			} else if (degree <= 157){
+				direction = "Wrong direction, please turn left " + (degree + 23) + "degree";
+			} else if (degree < 322 && degree > 157){
+				direction = "Wrong direction, please turn right " + (337 - degree) + "degree";
+			} else { 
+				direction = "go";
+			}			
+		}
+		if (curDegree == 157) {
+			if(degree < 142 ) {
+				direction = "Wrong direction, please turn right " + (157 - degree) + "degree";
+			} else if (degree >= 337){
+				direction = "Wrong direction, please turn right " + (517 - degree) + "degree";
+			} else if (degree < 337 && degree > 172){
+				direction = "Wrong direction, please turn left " + (degree - 157) + "degree";
+			} else { 
+				direction = "go";
+			}			
+		}
+		if (curDegree == 50) {
+			if(degree > 65 && degree <= 230) {
+				direction = "Wrong direction, please turn left " + (degree - 50) + "degree";
+			} else if (degree < 35){
+				direction = "Wrong direction, please turn right " + (50 - degree) + "degree";
+			} else if (degree > 230){
+				direction = "Wrong direction, please turn right " + (410 - degree) + "degree";
+			} else { 
+				direction = "go";
+			}			
+		}
+		if (curDegree == 230) {
+			if(degree > 245) {
+				direction = "Wrong direction, please turn left " + (degree - 230) + "degree";
+			} else if (degree < 215 && degree > 50){
+				direction = "Wrong direction, please turn right " + (230 - degree) + "degree";
+			} else if (degree <= 50){
+				direction = "Wrong direction, please turn left " + (130 + degree) + "degree";
+			} else { 
+				direction = "go";
+			}			
+		}
+		
+	}
 	public static double Distance(double long1, double lat1, double long2, double lat2) {  
 	    double a, b, R;  
 	    R = 6378137;
@@ -419,4 +537,5 @@ public class CalculationService extends Service{
 		double distanceToTag = -0.00903 *RSSI*RSSI - 2.171*RSSI - 94;
 		return distanceToTag;
 	}
+
 }
