@@ -1,0 +1,18 @@
+package edu.ece671.mapexample;
+
+public class position{
+	double x;
+	double y;
+	double distance;
+	double att;
+	position(double axisX, double axisY){
+		x = axisX;
+		y = axisY;
+	}
+	void setDistance(double distance){
+		this.distance = distance;
+	}
+	void setAtt(int att){
+		this.att = (double)att;
+	}
+}
