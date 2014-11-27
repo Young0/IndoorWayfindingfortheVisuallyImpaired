@@ -1,0 +1,123 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="edu.ece671.mapexample.DestinationActivityIntent" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/tag1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 15B" />
+
+            <Button
+                android:id="@+id/tag2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 14A or 15A" />
+
+            <Button
+                android:id="@+id/tag3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 13" />
+
+            <Button
+                android:id="@+id/tag4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 12" />
+
+            <Button
+                android:id="@+id/tag5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 10" />
+
+            <Button
+                android:id="@+id/tag6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 13A" />
+
+            <Button
+                android:id="@+id/tag7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 8" />
+
+            <Button
+                android:id="@+id/tag8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 6" />
+
+
+            <Button
+                android:id="@+id/tag10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stairs" />
+
+            <Button
+                android:id="@+id/tag11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CSL" />
+
+            <Button
+                android:id="@+id/tag12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Room 2" />
+
+            <Button
+                android:id="@+id/tag13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="M5" />
+
+            <Button
+                android:id="@+id/tag14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Restroom" />
+
+            <Button
+                android:id="@+id/tag15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Exit 1" />
+
+            <Button
+                android:id="@+id/tag16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/tag17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Exit2" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
