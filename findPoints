@@ -1,0 +1,110 @@
+package edu.ece671.mapexample;
+
+//get the coordinate of the current location
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
+public class findPoints{
+
+	public ArrayList<position> findMap(int[] allAtt){
+		ArrayList<position> allPosition = new ArrayList<position>();
+		calculatedTagXY allTag = new calculatedTagXY();
+		position[] allTagPosition= allTag.calculatedTagXY();
+		for(int i=0;i<17;i++){
+			allTagPosition[i].setAtt(allAtt[i]);
+			allPosition.add(allTagPosition[i]);
+		}
+		return allPosition;
+	}
+
+	//input hashMap;
+	public ArrayList<position> findTags(ArrayList<position> list, double range){
+		double RssI = 50000.0*Math.sqrt((double)1317961.0/1000000.0-903.0*range/25000.0)/903.0-108550.0/903.0;
+		System.out.println(RssI);
+		ArrayList<position> newlist = new ArrayList<position>();
+		for(int i=0;i<list.size();i++){
+			double r = list.get(i).att;
+			if(RssI < r){
+				double dis = -0.00903*r*r-2.171*r-94;
+				list.get(i).setDistance(dis);
+				newlist.add(list.get(i));
+			}
+		}
+		return newlist;
+	}
+
+	public line[] findLine(ArrayList<position> list){
+		int n = list.size();
+		n = (n-1)*n/2;
+		line[] lines = new line[n];
+		int z = 0;
+		for(int i =0;i<list.size();i++){
+			for(int j = i+1;j<list.size();j++){
+				position a = list.get(i);
+				position b = list.get(j);
+				double e = b.x - a.x;
+				double f = b.y - a.y;
+				double p = Math.sqrt(e*e+f*f);
+				double k = (p*p+a.distance*a.distance-b.distance*b.distance)/(2*p);
+				if(k < a.distance){
+				double x1 = a.x+e*k/p+f*Math.sqrt(a.distance*a.distance-k*k)/p;
+				double y1 = a.y+f*k/p-e*Math.sqrt(a.distance*a.distance-k*k)/p;
+				double x2 = a.x+e*k/p-f*Math.sqrt(a.distance*a.distance-k*k)/p;
+				double y2 = a.y+f*k/p+e*Math.sqrt(a.distance*a.distance-k*k)/p;
+				position linePosition1 = new position(x1,y1);
+				position linePosition2 = new position(x2,y2);
+				line l = new line(linePosition1, linePosition2);
+				lines[z] = l;
+				z++;
+				}
+			}
+		}
+		return lines;
+	}
+
+	public position findPosition(line[] lines){
+		int intersection = 0;
+		double x=0;
+		double y=0;
+		for(int i = 0; i<lines.length&&lines[i]!=null;i++){
+			line l1 = lines[i];
+			line l2;
+			for(int j = i+1; j<lines.length&&lines[j]!=null;j++){
+				l2 = lines[j];
+				double x1 = l1.first.x;
+				double y1 = l1.first.y;
+				double x2 = l1.second.x;
+				double y2 = l1.second.y;
+				double x3 = l2.first.x;
+				double y3 = l2.first.y;
+				double x4 = l2.second.x;
+				double y4 = l2.second.y;
+				double px = ((x1*y2-y1*x2)*(x3-x4)-(x1-x2)*(x3*y4-y3*x4))/((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4));
+				double py = ((x1*y2-y1*x2)*(y3-y4)-(y1-y2)*(x3*y4-y3*x4))/((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4));
+				if(px<=Math.max(x1, x2) && px>=Math.min(x1, x2) && px<=Math.max(x3, x4) && px>=Math.min(x3, x4)){
+					if(py<=Math.max(y1, y2) && py>=Math.min(y1, y2) && py<=Math.max(y3, y4) && py>=Math.min(y3, y4)){
+						x = x+px;
+						y = y+py;
+						intersection++;
+					}
+				}
+			}
+		}
+		if(x==0||y==0){
+			return null;
+		}
+		position pos = new position(x/intersection,y/intersection);
+		return pos;
+	}
+
+	public position findLatAndLon(position pos){
+		double lat1 =42.39354668258381;
+		double lon1 =-72.52833187580109;
+		double lat1Degree = 111000;
+		double lon1Degree = Math.cos((lat1/360.0)*2.0*Math.PI)*111000.0;
+		position latAndLon = new position(lat1+(double)pos.y/lat1Degree,lon1+(double)pos.x/lon1Degree);
+		return latAndLon;
+	}
+}
