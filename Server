@@ -1,6 +1,5 @@
 package edu.ece671.mapexample;
 
-
 import java.util.ArrayList;
 
 import android.app.Service;
@@ -145,7 +144,7 @@ public class CalculationService extends Service{
 	};
 
 	public void findLoc(int[] a){
-		Log.d("1212121212121212", desSpot+"");
+		Log.d("desSpot", desSpot+"");
 		int spot=0;
 		double val=a[0];
 		for(int i=0;i<17;i++){
@@ -155,22 +154,22 @@ public class CalculationService extends Service{
 			}
 		}
 
-		if(spot<14&&spot!=0){
+		if(spot < 14 && spot != 0){
 			double spotLat=nodes[spot][0];
 			double spotLon=nodes[spot][1];
 			double spotUpLat=nodes[spot+1][0];
 			double spotUpLon=nodes[spot+1][1];
 			double spotDownLat=nodes[spot-1][0];
 			double spotDownLon=nodes[spot-1][1];
-			int u=1;
-			int d=1;
-			double latAvg=(a[spot+1]+a[spot-1])/2;
+			int u = 1;
+			int d = 1;
+			double latAvg = (a[spot + 1] + a[spot - 1])/2;
 			
-			if(a[spot]<-60){
-				if(a[spot+1]>a[spot-1]){
-					u=5;
+			if(a[spot] <- 60){
+				if(a[spot +1 ] > a[spot - 1]){
+					u = 5;
 				}else{
-					d=5;
+					d = 5;
 				}
 			}
 			lat=((-1)*a[spot+1]*d*spotDownLat+(-1)*a[spot-1]*u*spotUpLat)/((-1*(a[spot+1]*d+a[spot-1]*u)));
@@ -178,53 +177,56 @@ public class CalculationService extends Service{
 			lon=((-1)*a[spot+1]*d*spotDownLon+(-1)*a[spot-1]*u*spotUpLon)/((-1*(a[spot+1]*d+a[spot-1]*u)));
 			lon=((-1)*lon*a[spot]+(-1)*spotLon*latAvg)/((-1)*(a[spot]+latAvg));
 		}else if(spot == 14){
-			double spotLat=nodes[spot][0];
-			double spotLon=nodes[spot][1];
-
-			if(a[13]<-75){
+			double spotLat = nodes[spot][0];
+			double spotLon = nodes[spot][1];
+				
+			//above the RSSI mag, it will be noise
+			if(a[13] <- 75){
 				lat = spotLat;
 				lon = spotLon;
 			}else{
-				lat = (nodes[spot][0]+nodes[spot-1][0])/2;
-				lon = (nodes[spot][1]+nodes[spot-1][1])/2;
+				lat = (nodes[spot][0] + nodes[spot - 1][0])/2;
+				lon = (nodes[spot][1] + nodes[spot - 1][1])/2;
 			}
 		}else if(spot == 0){
-			double spotLat=nodes[spot][0];
-			double spotLon=nodes[spot][1];
-				if(a[1]<-75){
+			double spotLat = nodes[spot][0];
+			double spotLon = nodes[spot][1];
+				if(a[1] <- 75){
 					lat = spotLat;
 					lon = spotLon;
 				}else{
-					lat = (nodes[spot][0]+nodes[spot+1][0])/2;
-					lon = (nodes[spot][1]+nodes[spot+1][1])/2;
+					lat = (nodes[spot][0] + nodes[spot + 1][0])/2;
+					lon = (nodes[spot][1] + nodes[spot + 1][1])/2;
 				}
 		}else if(spot == 16){
-			double spotLat=nodes[spot][0];
-			double spotLon=nodes[spot][1];
+			double spotLat = nodes[spot][0];
+			double spotLon = nodes[spot][1];
 
-			if(a[15]<-75){
+			if(a[15] < -75){
 				lat = spotLat;
 				lon = spotLon;
 			}else{
-				lat = (nodes[spot][0]+nodes[spot-1][0])/2;
-				lon = (nodes[spot][1]+nodes[spot-1][1])/2;
+				lat = (nodes[spot][0] + nodes[spot - 1][0])/2;
+				lon = (nodes[spot][1] + nodes[spot - 1][1])/2;
 			}
 		}else if(spot == 15){
-			double spotLat=nodes[spot][0];
-			double spotLon=nodes[spot][1];
-			double spotUpLat=nodes[16][0];
-			double spotUpLon=nodes[16][1];
-			double spotDownLat=nodes[9][0];
-			double spotDownLon=nodes[9][1];
-			double latAvg=(a[16]+a[9])/2;
+			double spotLat = nodes[spot][0];
+			double spotLon = nodes[spot][1];
+			double spotUpLat = nodes[16][0];
+			double spotUpLon = nodes[16][1];
+			double spotDownLat = nodes[9][0];
+			double spotDownLon = nodes[9][1];
+			double latAvg = (a[16] + a[9])/2;
 
-			lat=((-1)*a[16]*spotDownLat+(-1)*a[9]*spotUpLat)/((-1*(a[16]+a[9])));
-			lat=((-1)*lat*a[spot]+(-1)*spotLat*latAvg)/((-1)*(a[spot]+latAvg));
-			lon=((-1)*a[16]*spotDownLon+(-1)*a[9]*spotUpLon)/((-1*(a[16]+a[9])));
-			lon=((-1)*lon*a[spot]+(-1)*spotLon*latAvg)/((-1)*(a[spot]+latAvg));
+			lat = ((-1)*a[16]*spotDownLat+(-1)*a[9]*spotUpLat)/((-1*(a[16]+a[9])));
+			lat = ((-1)*lat*a[spot]+(-1)*spotLat*latAvg)/((-1)*(a[spot]+latAvg));
+			lon = ((-1)*a[16]*spotDownLon+(-1)*a[9]*spotUpLon)/((-1*(a[16]+a[9])));
+			lon = ((-1)*lon*a[spot]+(-1)*spotLon*latAvg)/((-1)*(a[spot]+latAvg));
 		}
 		Log.d("101010101010", desSpot+"");
-		if(desSpot!=-1){
+		
+		//-1 means initial point
+		if(desSpot != -1){
 			Log.d("777777", desSpot+"");
 			if( 0 <= spot && spot <= 8 ){
 				startArea = 1;
@@ -235,13 +237,13 @@ public class CalculationService extends Service{
 			}else if( spot == 16 ){
 				startArea = 4;
 			}else if( spot == 13 ){
-				if(a[12]>a[14]){
+				if(a[12] > a[14]){
 					startArea = 2;
 				}else{
 					startArea = 3;
 				}
 			}else if( spot == 15 ){
-				if(a[9]>a[16]){
+				if(a[9] > a[16]){
 					startArea = 1;
 				}else{
 					startArea = 4;
@@ -257,13 +259,13 @@ public class CalculationService extends Service{
 			}else if( desSpot == 16 ){
 				desArea = 4;
 			}else if( desSpot == 13 ){
-				if(a[12]>a[14]){
+				if(a[12] > a[14]){
 					desArea = 2;
 				}else{
 					desArea = 3;
 				}
 			}else if( desSpot == 15 ){
-				if(a[9]>a[16]){
+				if(a[9] > a[16]){
 					desArea = 1;
 				}else{
 					desArea = 4;
@@ -271,6 +273,8 @@ public class CalculationService extends Service{
 			}
 
 			Log.d("8888888", desArea+" "+startArea);
+			
+			//the point 7 is a special one, locates between one door and one corner
 			if(startArea == 1){
 				if(desArea == 1){					
 					if(desSpot==7){
@@ -518,6 +522,8 @@ public class CalculationService extends Service{
 		}
 		
 	}
+	
+	//a method to calculate the distance by lat. and lon.
 	public static double Distance(double long1, double lat1, double long2, double lat2) {  
 	    double a, b, R;  
 	    R = 6378137;
@@ -532,7 +538,8 @@ public class CalculationService extends Service{
 	    d = 2 * R * Math.asin(Math.sqrt(sa2 * sa2 + Math.cos(lat1) * Math.cos(lat2) * sb2 * sb2));  
 	    return d;  
 	}
-
+	
+	// a model of calculating the distance by RSSI 
 	public double getDistance(int RSSI){
 		double distanceToTag = -0.00903 *RSSI*RSSI - 2.171*RSSI - 94;
 		return distanceToTag;
