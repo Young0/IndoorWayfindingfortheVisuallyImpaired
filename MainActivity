@@ -17,8 +17,6 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
-//import com.example.radbeacontestingapp.BeaconAdapter;
-//import com.example.radbeacontestingapp.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -70,7 +68,7 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
 	String direction = "";
 	int targetID = -1;
 	TextToSpeech tts;
-	public static int time = 5;
+	public static int time = 5; // the time interval of speaking it up
 	HashMap<String, Integer> roomToId = new HashMap<String, Integer>();
 	private GoogleMap mMap;
 	String mUrl = "http://percept.ecs.umass.edu/course/marcusbasement/{z}/{x}/{y}.png";
@@ -180,14 +178,10 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
 	@Override
 	protected void onResume() {
 		super.onResume();
-		beaconManager
-				.getBeaconParsers()
-				.add(new BeaconParser()
-						.setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
+		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
 		beaconManager.bind(this);
 		// for the system's orientation sensor registered listeners
-		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-				SensorManager.SENSOR_DELAY_GAME);
+		mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME);
 	}
 
 	@Override
@@ -218,7 +212,8 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
 			discoveredBeaconList.add(bIter.next());
 		}
 	}
-
+		
+	//the latitude and longitude of all tags in Marcus
 	private void InitializeMarker(){
 		String marcusBeacons = "" +
 		"@Dis001,42.39354668258381,-72.52833187580109," +
@@ -267,11 +262,11 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
 	
 	private void setupMap(){
 		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-		
 		changeMapPositionAndZoom(new LatLng(marcusLat,marcusLng), knowlesZoom);
 		MyUrlTileProvider mTileProvider = new MyUrlTileProvider(256, 256, mUrl);
 		mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mTileProvider).zIndex(0));
-	    // display all the landmarks
+		
+		// display all the landmarks
 		 landmarks = new Landmarks();
 		 InitializeMarker();
 	}
@@ -334,11 +329,9 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
 		Log.d("We are before beaconManager","Before");
 		beaconManager.setRangeNotifier(new RangeNotifier() {
 			@Override
-			public void didRangeBeaconsInRegion(Collection<Beacon> beacons,
-					Region region) {
+			public void didRangeBeaconsInRegion(Collection<Beacon> beacons,	Region region) {
 				if (beacons.size() > 0) {
-					Log.i(TAG_SEARCHING_ACTIVITY_LOG, "Found " + beacons.size()
-							+ "beacons");
+					Log.i(TAG_SEARCHING_ACTIVITY_LOG, "Found " + beacons.size()+ "beacons");
 					for (Iterator<Beacon> bIterator = beacons.iterator(); bIterator
 							.hasNext();) {
 						final Beacon beacon = bIterator.next();
@@ -428,10 +421,10 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
     }
 
 	public void onPopupBtClick(View view) {
-		Log.d("lalalalalalalalala","lalalallalalalalalalalala");
+		Log.d("pop","popopop");
 		PopupMenu menu = new PopupMenu(this, view);
 		menu.getMenuInflater().inflate(R.menu.targets, menu.getMenu());
-		menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+		menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()){
 
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
@@ -440,10 +433,11 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
 				return true;
 			}
 			
-		});
+		};
 		menu.show();
 	}
 	
+	// all the rooms corresponding to the tags
 	public void mapRoom() {
 		roomToId.put("Room 15B", 0);
 		roomToId.put("Room 14A or 15A", 1);
@@ -475,12 +469,8 @@ public class MainActivity extends Activity implements IOnLandmarkSelectedListene
 		//tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
 
 		// create a rotation animation (reverse turn degree degrees)
-		RotateAnimation ra = new RotateAnimation(
-				currentDegree, 
-				-degree,
-				Animation.RELATIVE_TO_SELF, 0.5f, 
-				Animation.RELATIVE_TO_SELF,
-				0.5f);
+		RotateAnimation ra = new RotateAnimation(currentDegree, -degree, Animation.RELATIVE_TO_SELF, 0.5f, 
+				Animation.RELATIVE_TO_SELF, 0.5f);
 
 		// how long the animation will take place
 		ra.setDuration(210);
