@@ -475,6 +475,9 @@ public class CalculationService extends Service{
 		thread.start();	
 	}
 	
+
+// after test(Nov.30), there is sth wrong about the degree we approxiamted, need to revise it tomorrow
+
 	public void getDirection(float curDegree) {
 		if (curDegree == 337) {
 			if(degree > 352 ) {
@@ -539,7 +542,7 @@ public class CalculationService extends Service{
 	    return d;  
 	}
 	
-	// a model of calculating the distance by RSSI 
+	// a model of calculating the distance by RSSI, especially for tablet and different to phone
 	public double getDistance(int RSSI){
 		double distanceToTag = -0.00903 *RSSI*RSSI - 2.171*RSSI - 94;
 		return distanceToTag;
