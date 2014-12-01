@@ -479,46 +479,46 @@ public class CalculationService extends Service{
 // after test(Nov.30), there is sth wrong about the degree we approxiamted, need to revise it tomorrow
 
 	public void getDirection(float curDegree) {
-		if (curDegree == 337) {
-			if(degree > 352 ) {
-				direction = "Wrong direction, please turn left " + (degree - 337) + "degree";
-			} else if (degree <= 157){
-				direction = "Wrong direction, please turn left " + (degree + 23) + "degree";
-			} else if (degree < 322 && degree > 157){
-				direction = "Wrong direction, please turn right " + (337 - degree) + "degree";
+		if (curDegree == 17) {
+			if(degree > 32 && degree <= 197) {
+				direction = "Wrong direction, please turn left " + (degree - 17) + "degree";
+			} else if (degree > 197){
+				direction = "Wrong direction, please turn right " + (377 - degree) + "degree";
+			} else if (degree < 2){
+				direction = "Wrong direction, please turn right " + (17 - degree) + "degree";
 			} else { 
 				direction = "go";
 			}			
 		}
-		if (curDegree == 157) {
-			if(degree < 142 ) {
-				direction = "Wrong direction, please turn right " + (157 - degree) + "degree";
-			} else if (degree >= 337){
-				direction = "Wrong direction, please turn right " + (517 - degree) + "degree";
-			} else if (degree < 337 && degree > 172){
-				direction = "Wrong direction, please turn left " + (degree - 157) + "degree";
+		if (curDegree == 197) {
+			if(degree >= 17 && degree < 182) {
+				direction = "Wrong direction, please turn right " + (197 - degree) + "degree";
+			} else if (degree > 212){
+				direction = "Wrong direction, please turn left " + (degree - 197) + "degree";
+			} else if (degree < 17){
+				direction = "Wrong direction, please turn left " + (163 + degree) + "degree";
 			} else { 
 				direction = "go";
 			}			
 		}
-		if (curDegree == 50) {
-			if(degree > 65 && degree <= 230) {
-				direction = "Wrong direction, please turn left " + (degree - 50) + "degree";
-			} else if (degree < 35){
-				direction = "Wrong direction, please turn right " + (50 - degree) + "degree";
-			} else if (degree > 230){
-				direction = "Wrong direction, please turn right " + (410 - degree) + "degree";
+		if (curDegree == 129) {
+			if(degree < 114) {
+				direction = "Wrong direction, please turn right " + (129 - degree) + "degree";
+			} else if (degree > 144 && degree <= 309){
+				direction = "Wrong direction, please turn left " + (degree - 197) + "degree";
+			} else if (degree > 309){
+				direction = "Wrong direction, please turn right " + (489 - degree) + "degree";
 			} else { 
 				direction = "go";
 			}			
 		}
-		if (curDegree == 230) {
-			if(degree > 245) {
-				direction = "Wrong direction, please turn left " + (degree - 230) + "degree";
-			} else if (degree < 215 && degree > 50){
-				direction = "Wrong direction, please turn right " + (230 - degree) + "degree";
-			} else if (degree <= 50){
-				direction = "Wrong direction, please turn left " + (130 + degree) + "degree";
+		if (curDegree == 309) {
+			if(degree > 324) {
+				direction = "Wrong direction, please turn left " + (degree - 309) + "degree";
+			} else if (degree <= 129){
+				direction = "Wrong direction, please turn left " + (51 + degree) + "degree";
+			} else if (degree > 129 && degree < 295){
+				direction = "Wrong direction, please turn right " + (309 - degree) + "degree";
 			} else { 
 				direction = "go";
 			}			
