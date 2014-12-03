@@ -474,9 +474,9 @@ public class CalculationService extends Service{
 		Thread thread = new Thread(null, calculationAnswer, "calculationAnswerThread");
 		thread.start();	
 	}
-	
 
-// after test(Nov.30), there is sth wrong about the degree we approxiamted, need to revise it tomorrow
+
+// these degrees are based on the real situation of Marcus, it could also be easier changed according to other buildings
 
 	public void getDirection(float curDegree) {
 		if (curDegree == 17) {
